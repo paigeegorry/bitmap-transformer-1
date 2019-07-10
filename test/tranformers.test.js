@@ -1,5 +1,6 @@
 const invert = require('../lib/invert-transformer');
 const grayscale = require('../lib/grayscale-transformer');
+const sepia = require('../lib/sepia-transformer');
 
 describe('transformers', () => {
 
@@ -18,8 +19,6 @@ describe('transformers', () => {
   });
 
   it('grayscale', () => {
-    // HINT: grayscale assigns the average of all three colors
-    // as the new value for each color
     const transformed = grayscale({
       r: 34,
       g: 100,
@@ -33,5 +32,18 @@ describe('transformers', () => {
     });
   });
 
-  // TODO: add a third transformer (you'll need to add the module and require!) and test
+  it('sepia', () => {
+    const transformed = sepia({
+      r: 34,
+      g: 100,
+      b: 205
+    });
+
+    expect(transformed).toEqual({
+      r: 129.007,
+      g: 114.906,
+      b: 136.637
+    });
+  });
+
 });
