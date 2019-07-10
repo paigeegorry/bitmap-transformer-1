@@ -1,12 +1,23 @@
-const { readFileSync } = require('fs');
+const fs = require('fs');
 const BitmapTransformer = require('../lib/bitmap-transformer');
-const invert = require('../lib/invert-transform');
+const invert = require('../lib/invert-transformer');
 
 describe('bitmap file transformer', () => {
-
   let buffer = null;
-  beforeEach(() => {
+  let expectedTransformedBuffer = null;
 
+  beforeEach(done => {
+    fs.readFile('./test/test-bitmap.bmp', (err, data) => {
+      buffer = data;
+      done();
+    });
+  });
+
+  beforeEach(done => {
+    fs.readFile('./test/inverted-bitmap.bmp', (err, data) => {
+      expectedTransformedBuffer = data;
+      done();
+    });
   });
 
   // "pinning" test, or "snapshot" test
@@ -24,7 +35,7 @@ describe('bitmap file transformer', () => {
       // and is accessible via bitmap.buffer.
 
       // Read the output file we saved earlier as the "standard" expected output file.
-      const expected = readFileSync('./test/inverted-expected.bmp');
+      const expected = fs.readFileSync('./test/inverted-expected.bmp');
       expect(bitmap.buffer).toEqual(expected);
       done();
 
